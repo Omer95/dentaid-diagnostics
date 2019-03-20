@@ -1,0 +1,11 @@
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+.login {
+    overflow: scroll;
+    background: url('../../assets/images/header-bg.png');
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
