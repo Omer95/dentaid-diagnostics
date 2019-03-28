@@ -1,0 +1,47 @@
+<div class="row">
+  <h1 style="color: gray">Diagnose your OPG</h1>
+</div>
+<div class="row">
+  <button type="button" mdbBtn color="success" mdbWavesEffect (click)="patientModal.show()">1. Select Patient</button>
+  <button type="button" mdbBtn color="warning" mdbWavesEffect>2. Upload OPG</button>
+  <button type="button" mdbBtn color="danger" mdbWavesEffect>3. Diagnose!</button>
+</div>
+<div class="row">
+  <div mdbModal #patientModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myPatientModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="patientModal.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">Patient Data</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <select class="browser-default custom-select" [formControl]="patientSelect">
+              <option selected disabled>Choose your patient</option>
+              <option *ngFor="let patient of patients">{{patient.mrNum}}: {{patient.name}}</option> 
+            </select>
+            <button type="button" mdbBtn color="success" (click)="useCurrentPatient()" mdbWavesEffect>Use this patient</button>
+          </div>
+          <div class="form-group" style="margin-top: 1em;">
+            <h3>Add New Patient</h3>
+            <input class="form-control" type="text" placeholder="Patient MR Number" [formControl]="mrNumber">
+            <input class="form-control" type="text" placeholder="Name" [formControl]="patientName">
+            <select class="form-control" [formControl]="gender">
+              <option selected disabled>Gender</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+            <label class="form-control">Date of Birth</label>
+            <input class="form-control" type="date" [formControl]="dob">
+            <button type="button" mdbBtn color="success" (click)="useNewPatient()" mdbWavesEffect>Use this patient</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="patientModal.hide()" mdbWavesEffect>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

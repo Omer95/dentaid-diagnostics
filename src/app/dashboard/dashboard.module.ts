@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { ReactiveFormsModule } from '@angular/forms';
+import { OpgpanelComponent } from './opgpanel/opgpanel.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -10,11 +15,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    ToolbarComponent,
+    OpgpanelComponent
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AngularFireDatabaseModule,
+    ReactiveFormsModule,
+    MDBBootstrapModule.forRoot()
   ]
 })
 export class DashboardModule { }
