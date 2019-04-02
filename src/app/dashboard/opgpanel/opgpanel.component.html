@@ -3,8 +3,17 @@
 </div>
 <div class="row">
   <button type="button" mdbBtn color="success" mdbWavesEffect (click)="patientModal.show()">1. Select Patient</button>
-  <button type="button" mdbBtn color="warning" mdbWavesEffect>2. Upload OPG</button>
+  <div class="choose-file">
+    <button [disabled]="!uploadOpg" type="button" mdbBtn color="warning" mdbWavesEffect>2. Upload OPG</button>
+    <input *ngIf="patient" name="img" type="file" accept="image/jpeg" (change)="uploadImg($event.target.files[0])">
+  </div>
   <button type="button" mdbBtn color="danger" mdbWavesEffect>3. Diagnose!</button>
+</div>
+<div class="row">
+  <h3 *ngIf="patient" class="animated fadeInLeft">Patient: {{patient}}</h3>
+</div>
+<div *ngIf="currentOpgURL" class="row animated fadeIn" style="margin-top: 2em;">
+  <img [src]="currentOpgURL" ngxViewer style="width: 80%; height: 80%; object-fit: contain;">
 </div>
 <div class="row">
   <div mdbModal #patientModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myPatientModalLabel" aria-hidden="true">
@@ -18,24 +27,32 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
+            <h3>Choose Current Patient</h3>
             <select class="browser-default custom-select" [formControl]="patientSelect">
-              <option selected disabled>Choose your patient</option>
-              <option *ngFor="let patient of patients">{{patient.mrNum}}: {{patient.name}}</option> 
+              <option *ngFor="let patient of patients" [value]="patient.mrNum+' '+patient.name">{{patient.mrNum}}: {{patient.name}}</option> 
             </select>
-            <button type="button" mdbBtn color="success" (click)="useCurrentPatient()" mdbWavesEffect>Use this patient</button>
+            <button [disabled]="!patientSelect.value" type="button" mdbBtn color="success" (click)="useCurrentPatient()" mdbWavesEffect>Use this patient</button>
           </div>
           <div class="form-group" style="margin-top: 1em;">
-            <h3>Add New Patient</h3>
+            <h3>Or Add New Patient</h3>
             <input class="form-control" type="text" placeholder="Patient MR Number" [formControl]="mrNumber">
+          </div>
+          <div class="form-group">
             <input class="form-control" type="text" placeholder="Name" [formControl]="patientName">
+          </div>
+          <div class="form-group">
+            <label>Choose Gender</label>
             <select class="form-control" [formControl]="gender">
-              <option selected disabled>Gender</option>
-              <option>Male</option>
-              <option>Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
-            <label class="form-control">Date of Birth</label>
-            <input class="form-control" type="date" [formControl]="dob">
-            <button type="button" mdbBtn color="success" (click)="useNewPatient()" mdbWavesEffect>Use this patient</button>
+          </div>
+          <div class="form-group">
+              <label>Date of Birth</label>
+              <input class="form-control" type="date" [formControl]="dob">
+          </div>
+          <div class="form-group">
+            <button [disabled]="!mrNumber.vlaue && !patientName.value && !gender.value && !dob.value" type="button" mdbBtn color="success" (click)="useNewPatient()" mdbWavesEffect>Use this patient</button>
           </div>
         </div>
         <div class="modal-footer">

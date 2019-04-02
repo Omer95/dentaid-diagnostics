@@ -7,6 +7,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OpgpanelComponent } from './opgpanel/opgpanel.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { NgxViewerModule } from 'ngx-viewer';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -24,7 +26,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    AngularFireStorageModule,
+    NgxViewerModule
   ]
 })
 export class DashboardModule { }
