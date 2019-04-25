@@ -21,6 +21,11 @@ const routes: Routes = [
     path: 'personal-uploads',
     loadChildren: '../app/personal-uploads/personal-uploads.module#PersonalUploadsModule',
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'opgclient-uploads',
+    loadChildren: '../app/opgclient-uploads/opgclient-uploads.module#OpgclientUploadsModule',
+    canActivate: [AuthGuardService]
   }
 ];
 

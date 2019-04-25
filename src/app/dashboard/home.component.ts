@@ -10,7 +10,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class HomeComponent implements OnInit {
   searchForm: FormGroup;
-  lastWeekOpg: number;
+  lastWeekOpg = 0;
   personalUploads = 0;
   patients = 0;
   constructor(private loginService: LoginService,
@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
           });
         }
       });
+    });
+    this.db.list('/opgclient').valueChanges().subscribe(files => {
+      this.lastWeekOpg = files.length;
     });
     this.searchForm = this.formBuilder.group({
       search: [undefined, Validators.required]
