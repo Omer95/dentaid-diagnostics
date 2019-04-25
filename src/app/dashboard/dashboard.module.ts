@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SharedModule } from '../shared/shared.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +18,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
-    ToolbarComponent,
     OpgpanelComponent
   ],
   imports: [
@@ -28,7 +27,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     AngularFireStorageModule,
-    NgxViewerModule
+    NgxViewerModule,
+    SharedModule
+  ],
+  exports: [
   ]
 })
 export class DashboardModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,24 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   searchForm: FormGroup;
   lastWeekOpg: number;
-  personalUploads: number;
-  patients: number;
+  personalUploads = 0;
+  patients = 0;
   constructor(private loginService: LoginService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.lastWeekOpg = 0; // to-do: count the number of images uploaded to firebase storage in the last week
-    this.personalUploads = 0; // How many OPGs the dentist has uploaded
-    this.patients = 0; // count opg images with the same patient MR number
+    this.db.list(`/users/${JSON.parse(localStorage.getItem('user')).uid}/patients`).valueChanges().subscribe(patient => {
+      patient.forEach(aPatient => {
+        this.patients++;
+        if (aPatient['opgs']) {
+          Object.keys(aPatient['opgs']).forEach(_ => {
+            this.personalUploads++;
+          });
+        }
+      });
+    });
     this.searchForm = this.formBuilder.group({
       search: [undefined, Validators.required]
     });

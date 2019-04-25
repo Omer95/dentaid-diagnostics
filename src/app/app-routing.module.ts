@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: '../app/dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'personal-uploads',
+    loadChildren: '../app/personal-uploads/personal-uploads.module#PersonalUploadsModule',
+    canActivate: [AuthGuardService]
   }
 ];
 
