@@ -7,13 +7,16 @@
     <button [disabled]="!uploadOpg" type="button" mdbBtn color="warning" mdbWavesEffect>2. Upload OPG</button>
     <input *ngIf="patient" name="img" type="file" accept="image/jpeg" (change)="uploadImg($event.target.files[0])">
   </div>
-  <button type="button" mdbBtn color="danger" mdbWavesEffect>3. Diagnose!</button>
+  <!-- <button (click)="diagnose()" type="button" mdbBtn color="danger" mdbWavesEffect>3. Diagnose!</button> -->
 </div>
 <div class="row">
   <h3 *ngIf="patient" class="animated fadeInLeft">Patient: {{patient}}</h3>
 </div>
 <div *ngIf="currentOpgURL" class="row animated fadeIn" style="margin-top: 2em;">
   <img [src]="currentOpgURL" ngxViewer style="width: 80%; height: 80%; object-fit: contain;">
+</div>
+<div *ngIf="diagnosedImage" class="row animated fadeIn" style="margin-top: 2em;">
+  <img [src]="diagnosedImage" ngxViewer style="width: 80%; height: 80%; object-fit: contain;">
 </div>
 <div class="row">
   <div mdbModal #patientModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myPatientModalLabel" aria-hidden="true">

@@ -6,10 +6,10 @@
         <div class="row" style="padding-top: 1em; padding-left: 1em;">
           <div class="jumbotron" style="width: 100%">
             <h2>OPG Client Uploads</h2>
-            <div ngxViewer>
-              <div *ngFor="let image of imageUrlList">
+            <div *ngIf=showImages ngxViewer>
+              <div *ngFor="let image of randList; let i=index">
                 <h4 style="text-align: center;">{{image.filename}}</h4>
-                <img [src]=image.imageUrl style="width: 80%; height: 80%; object-fit: contain; padding:1em;">
+                <img [src]=imageUrlList[i].imageUrl style="width: 80%; height: 80%; object-fit: contain; padding:1em;">
               </div>
             </div>
           </div>

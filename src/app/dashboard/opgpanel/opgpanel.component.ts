@@ -7,6 +7,8 @@ import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage
 import { LoginService } from '../../login/login.service';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-opgpanel',
@@ -30,9 +32,11 @@ export class OpgpanelComponent implements OnInit {
   snapshot: Observable<any>;
   downloadURL: Observable<any>;
   currentOpgURL = null;
+  diagnosedImage = null;
   constructor(private loginService: LoginService,
               private storage: AngularFireStorage,
-              private db: AngularFireDatabase) { }
+              private db: AngularFireDatabase,
+              private http: HttpClient) { }
 
   ngOnInit() {
     // populate patients array
@@ -75,6 +79,7 @@ export class OpgpanelComponent implements OnInit {
           this.downloadURL = fileRef.getDownloadURL();
           this.downloadURL.subscribe(value => {
             this.currentOpgURL = value;
+            this.diagnose(value, JSON.parse(localStorage.getItem('user')).uid, filePath);
             // add url to list of OPGs for patient
             // tslint:disable-next-line:max-line-length
             this.db.object(`/users/${JSON.parse(localStorage.getItem('user')).uid}/patients/${this.patient.split(' ')[0]}/opgs/${new Date().getTime()}`)
@@ -86,6 +91,23 @@ export class OpgpanelComponent implements OnInit {
     } else {
       console.error('file size greater than 10 MB');
     }
+  }
+  diagnose(url, userID, filename) {
+    this.http.post('http://13.68.196.95:4400/dentist', {
+      imageUrl: url,
+      userId: userID,
+      filePath: filename
+    }, {responseType: 'text'}).subscribe(res => {
+      console.log(res);
+      console.log(filename);
+      this.getDiagnosedImage(filename + '_1');
+    });
+  }
+  getDiagnosedImage(filename): void {
+    const ref = this.storage.ref(filename);
+    ref.getDownloadURL().subscribe(url => {
+      this.diagnosedImage = url;
+    });
   }
 
 }

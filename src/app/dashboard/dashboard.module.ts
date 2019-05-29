@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { OpgpanelComponent } from './opgpanel/opgpanel.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { NgxViewerModule } from 'ngx-viewer';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -28,7 +29,8 @@ const routes: Routes = [
     MDBBootstrapModule.forRoot(),
     AngularFireStorageModule,
     NgxViewerModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   exports: [
   ]
