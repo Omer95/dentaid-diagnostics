@@ -55,7 +55,7 @@
               <input class="form-control" type="date" [formControl]="dob">
           </div>
           <div class="form-group">
-            <button [disabled]="!mrNumber.vlaue && !patientName.value && !gender.value && !dob.value" type="button" mdbBtn color="success" (click)="useNewPatient()" mdbWavesEffect>Use this patient</button>
+            <button [disabled]="!mrNumber.value && !patientName.value && !gender.value && !dob.value" type="button" mdbBtn color="success" (click)="useNewPatient()" mdbWavesEffect>Use this patient</button>
           </div>
         </div>
         <div class="modal-footer">
